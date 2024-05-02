@@ -9,15 +9,14 @@ const db = new Pool({
   password: "",
   host: "localhost",
   port: 5432,
-  database: "BA",
+  database: "fsvideos",
 });
 const app = express();
 const port = process.env.PORT || 3400;
 
-app.get("/", async (_, res) => {
+app.get("/api/videos", async (_, res) => {
   const data = await db.query("SELECT * FROM videos");
   res.send(data.rows);
-  res.send("hitting the server");
 });
 
 app.listen(port, () => {
