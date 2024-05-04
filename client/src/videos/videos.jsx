@@ -1,25 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const Videos = () => {
   const [videos, setVideos] = useState([]);
+  const fetchedVideos = useRef(true);
 
   useEffect(() => {
-    fetch("/api/videos")
-      .then((response) => response.json())
-      .then((data) => setVideos(data))
-      .catch((error) => console.error("Error fetching videos:", error));
+    if (fetchedVideos.current) {
+      fetchedVideos.current = false;
+      fetch("http://localhost:3400/api/videos")
+        .then((res) => res.json())
+        .then((data) => {
+          setVideos(data);
+          fetchedVideos.current = true;
+        });
+    }
   }, []);
 
-  return (
-    <>
-      <p style={{ backgroundColor: "yellow" }}>this is video paragraph !</p>
-      <ul>
-        {videos.map((video) => (
-          <li key={video.id}>{video.title}</li>
-        ))}
-      </ul>
-    </>
-  );
+  const mapVideos = videos.map((video, index) => {
+    return (
+      <div key={index} className="container">
+        <p>{video.title}</p>
+        <iframe
+          src={video.src}
+          title="Video recommendations"
+          className="container_video"
+        ></iframe>
+      </div>
+    );
+  });
+
+  return <p>{mapVideos}</p>;
 };
 
 export default Videos;
