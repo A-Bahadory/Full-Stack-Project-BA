@@ -13,9 +13,9 @@ const db = new Pool({
   port: 5432,
   database: "fsvideos",
 });
-// console.log("this is db data --->", db);
+// console.log("this is db deta --->", db);
 const app = express();
-const port = 3400;
+const port = 3000;
 app.use(
   cors({
     origin: "*",
