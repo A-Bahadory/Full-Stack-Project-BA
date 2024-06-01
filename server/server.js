@@ -14,6 +14,7 @@ const db = new Pool({
   database: "fsvideos",
 });
 // console.log("this is db deta --->", db);
+// new port
 const app = express();
 const port = 3000;
 app.use(
